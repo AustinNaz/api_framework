@@ -1,15 +1,9 @@
-// module.exports = (app, routeName) => {
-//   app.get(routeName, (req, res) => {
-//       res.send('Welcome to Jk Charms API!')
-//   });
-// }
-
-import { Express } from "express";
 import { RoutesType } from "../helpers";
 
 const Routes = ({ app, folderName: routeName }: RoutesType) => {
-  app.get(routeName, (req, res) => {
-    res.send("Welcome to the Framework!");
+  app.get(routeName, (req, res, next) => {
+    const { success } = req;
+    success({ res, next, body: "Welcome to the Framework!" });
   });
 };
 

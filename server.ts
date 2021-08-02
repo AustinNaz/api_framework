@@ -6,8 +6,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import { injectData, recursiveRoutes } from "./helpers";
-// const { recursiveRoutes, injectData } = require("./helpers");
-// const { injectableData } = require("./utils/injectableData");
+import injectableData from './utils/injectableData';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +22,7 @@ const port = process.env.PORT || "5000";
 //     .then(() => console.log(`MongoDB connected [${dbUri}]`))
 //     .catch(err => console.error('Could not connect to MongoDB:', err));
 
-// app.use(injectData(injectableData)); // Injects the extra data
+app.use(injectData(injectableData)); // Injects the extra data
 
 recursiveRoutes({ app, folderName: "routes" }); // Creates the routes
 
