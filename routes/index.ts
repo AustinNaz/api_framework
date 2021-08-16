@@ -1,4 +1,4 @@
-import { RoutesType } from "../helpers";
+import { RoutesType } from "helpers";
 
 const Routes = ({ app, folderName: routeName }: RoutesType) => {
   app.get(routeName, (req, res, next) => {

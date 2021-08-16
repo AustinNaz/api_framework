@@ -1,33 +1,16 @@
-import { Request, Response, NextFunction } from "express";
+import { ResStruct, ExpressMiddleware } from "types";
 
-export type resStruct = {
-  status?: number;
-  body: any;
-  res: Response;
-  next: NextFunction;
-};
-
-export type FuncResStruct = ({ status, body, res, next }: resStruct) => void;
-
-export type ExpressMiddleware = {
-  req: Request;
-  res: Response;
-  next: NextFunction;
-};
-
-export type FuncExpessMiddle = ({ req, res, next }: ExpressMiddleware) => any;
-
-export const success: FuncResStruct = ({ status = 200, body, res, next }) => {
+export const success = ({ status = 200, body, res, next }: ResStruct) => {
   res.status(status).send({ data: body });
   next();
 };
 
-export const failure: FuncResStruct = ({ status = 400, body, res, next }) => {
+export const failure = ({ status = 400, body, res, next }: ResStruct) => {
   res.status(status).send({ error: body });
   next(body);
 };
 
-export const parseReq: FuncExpessMiddle = ({ req, res, next }) => {
+export const parseReq = ({ req, res, next }: ExpressMiddleware) => {
   let body;
   if (typeof req.body === "string") body = JSON.parse(req.body);
   else body = req.body;

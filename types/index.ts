@@ -1,0 +1,1 @@
+export type { ResStruct, ExpressMiddleware } from './express'
