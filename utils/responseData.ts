@@ -1,7 +1,7 @@
-import { ResStruct, ExpressMiddleware } from "types";
+import { ResStruct, ExpressMiddleware } from "../types";
 
 export const success = ({ status = 200, body, res, next }: ResStruct) => {
-  res.status(status).send({ data: body });
+  res.status(status).send(body);
   next();
 };
 

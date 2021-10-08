@@ -18,10 +18,11 @@ app.options("*", cors());
 const port = process.env.PORT || "5000";
 const dbUri = process.env.MONGODB_HOST || "";
 
-mongoose
-  .connect(dbUri, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log(`MongoDB connected [${dbUri}]`))
-  .catch((err) => console.error("Could not connect to MongoDB:", err));
+if (dbUri)
+  mongoose
+    .connect(dbUri, { useUnifiedTopology: true, useNewUrlParser: true })
+    .then(() => console.log(`MongoDB connected [${dbUri}]`))
+    .catch((err) => console.error("Could not connect to MongoDB:", err));
 
 app.use(injectData(injectableData)); // Injects the extra data
 
