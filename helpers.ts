@@ -16,20 +16,20 @@ function stripFilePath(filePath: string) {
   return "";
 }
 
-export function recursiveRoutes({ app, folderName, extras }: Routes) {
+export function recursiveRoutes({ app, folderName, ws, extras }: Routes) {
   fs.readdirSync(folderName).forEach(async (file) => {
     const fullName = path.join(folderName, file);
     const stat = fs.lstatSync(fullName);
 
     try {
       if (stat.isDirectory()) {
-        recursiveRoutes({ app, folderName: fullName, extras });
+        recursiveRoutes({ app, folderName: fullName, ws, extras });
       } else if (file.toLowerCase().indexOf(".js")) {
         if (file === 'helpers.ts' || file === 'helpers.js') return
         const Routes: { default: ({}: Routes) => void } = await import(
           "./" + fullName
         );
-        Routes.default({ app, folderName: stripFilePath(folderName), extras });
+        Routes.default({ app, folderName: stripFilePath(folderName), ws, extras });
         console.log("require('" + fullName + "')");
       }
     } catch (err) {

@@ -4,6 +4,7 @@ const cors = require("cors");
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import websocket from "./utils/websocket";
 
 import { injectData, recursiveRoutes } from "./helpers";
 import injectableData from "./utils/injectableData";
@@ -26,8 +27,10 @@ if (dbUri)
 
 app.use(injectData(injectableData)); // Injects the extra data
 
-recursiveRoutes({ app, folderName: "routes" }); // Creates the routes
-
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Listening to requests on port: ${port}`);
 });
+
+const ws = websocket(server)
+
+recursiveRoutes({ app, folderName: "routes", ws }); // Creates the routes
