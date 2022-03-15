@@ -1,4 +1,10 @@
 const Routes = ({ app, folderName: routeName, ws }: Routes) => {
+  /**
+   * Get /
+   * @summary This is the first endpoint
+   * @returns {string} 200 - success response
+   * @tags index
+   */
   app.get(routeName, (req, res, next) => {
     const { success, failure } = req;
     try {

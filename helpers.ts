@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { Response, NextFunction } from "express";
+import { Options } from 'express-jsdoc-swagger'
 
 function stripFilePath(filePath: string) {
   if (filePath.includes("routes")) {
@@ -45,4 +46,15 @@ export function injectData(data: any) {
     });
     next();
   };
+}
+
+export const options: Options = {
+  info: {
+    version: '1.0.0',
+    title: 'Express API'
+  },
+  baseDir: __dirname,
+  filesPattern: './routes/**/index.ts',
+  exposeSwaggerUI: true,
+  apiDocsPath: '/api-docs'
 }

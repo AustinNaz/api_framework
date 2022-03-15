@@ -6,8 +6,9 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import websocket from "./utils/websocket";
 import helmet from "helmet"
+import expressJSDocSwagger from "express-jsdoc-swagger";
 
-import { injectData, recursiveRoutes } from "./helpers";
+import { injectData, recursiveRoutes, options } from "./helpers";
 import injectableData from "./utils/injectableData";
 
 const app = express();
@@ -36,5 +37,7 @@ const server = app.listen(port, () => {
 
 // set WS=ENABLED in .env file to enable websocket
 const ws = process.env.WS === "ENABLED" ? websocket(server) : undefined;
+
+expressJSDocSwagger(app)(options)
 
 recursiveRoutes({ app, folderName: "routes", ws }); // Creates the routes
