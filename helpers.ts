@@ -26,7 +26,7 @@ export function recursiveRoutes({ app, folderName, ws, extras }: Routes) {
       if (stat.isDirectory()) {
         recursiveRoutes({ app, folderName: fullName, ws, extras });
       } else if (file.toLowerCase().indexOf(".js")) {
-        if (file === 'helpers.ts' || file === 'helpers.js') return
+        if (file !== "index.ts" && file !== 'index.js') return
         const Routes: { default: ({}: Routes) => void } = await import(
           "./" + fullName
         );
