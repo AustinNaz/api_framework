@@ -1,4 +1,4 @@
-const Routes = ({ app, folderName: routeName }: Routes) => {
+const Routes = ({ app, folderName: routeName, extras: { logger } }: Routes) => {
   /**
    * Get /
    * @summary This is the first endpoint
@@ -10,7 +10,7 @@ const Routes = ({ app, folderName: routeName }: Routes) => {
     try {
       success({ res, next, body: "Welcome to the Framework!" });
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       return failure({ res, next, body: "Route Failed" });
     }
   });
