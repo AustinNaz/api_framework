@@ -1,4 +1,4 @@
-const Routes = ({ app, folderName: routeName, ws }: Routes) => {
+const Routes = ({ app, folderName: routeName }: Routes) => {
   /**
    * Get /
    * @summary This is the first endpoint

@@ -1,7 +1,7 @@
-import { success, failure, parseReq } from "./responseData";
+import { success, failure, authFailure } from "./responseData";
 
 export default {
   success,
   failure,
-  parseReq,
+  authFailure,
 };

@@ -1,11 +1,15 @@
 import { Express } from 'express'
-import { wssRooms } from '../../types'
+import { wssRooms, AuthRoute } from '../../types'
+import { authRoute, isAuthorized} from '../../utils/authHelpers'
 
 declare global {
   interface Routes {
     app: Express
     folderName: string
-    ws?: wssRooms
-    extras?: any
+    extras?: {
+      authRoute: AuthRoute
+      isAuthorized: typeof isAuthorized
+      ws?: wssRooms
+    }
   }
 }

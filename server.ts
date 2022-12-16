@@ -5,9 +5,11 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import websocket from "./utils/websocket";
-import helmet from "helmet"
+import helmet from "helmet";
 import expressJSDocSwagger from "express-jsdoc-swagger";
 
+import firebase from "./utils/firebase";
+import { authRoute, isAuthorized } from "./utils/authHelpers";
 import { injectData, recursiveRoutes, options } from "./helpers";
 import injectableData from "./utils/injectableData";
 
@@ -38,6 +40,15 @@ const server = app.listen(port, () => {
 // set WS=ENABLED in .env file to enable websocket
 const ws = process.env.WS === "ENABLED" ? websocket(server) : undefined;
 
-expressJSDocSwagger(app)(options)
+expressJSDocSwagger(app)(options);
 
-recursiveRoutes({ app, folderName: "routes", ws }); // Creates the routes
+const firebaseAuth = authRoute({
+  // Replace this with your own auth function, needs to return a token with a uid, role and email
+  verifyIdToken: (token) => firebase.auth().verifyIdToken(token),
+});
+
+recursiveRoutes({
+  app,
+  folderName: "routes",
+  extras: { authRoute: firebaseAuth, isAuthorized, ws },
+}); // Creates the routes

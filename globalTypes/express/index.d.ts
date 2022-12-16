@@ -1,11 +1,13 @@
-import { success, failure, parseReq } from '../../utils/responseData'
+import { success, failure, authFailure } from '../../utils/responseData'
+import { UserToken } from '../../types'
 
 declare global {
   namespace Express {
     interface Request {
       success: typeof success
       failure: typeof failure
-      parseReq: typeof parseReq
+      authFailure: typeof authFailure
+      userToken?: UserToken
     }
   }
 }

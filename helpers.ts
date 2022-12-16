@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { Response, NextFunction } from "express";
-import { Options } from 'express-jsdoc-swagger'
+import { Options } from "express-jsdoc-swagger";
 
 function stripFilePath(filePath: string) {
   if (filePath.includes("routes")) {
@@ -17,20 +17,20 @@ function stripFilePath(filePath: string) {
   return "";
 }
 
-export function recursiveRoutes({ app, folderName, ws, extras }: Routes) {
+export function recursiveRoutes({ app, folderName, extras }: Routes) {
   fs.readdirSync(folderName).forEach(async (file) => {
     const fullName = path.join(folderName, file);
     const stat = fs.lstatSync(fullName);
 
     try {
       if (stat.isDirectory()) {
-        recursiveRoutes({ app, folderName: fullName, ws, extras });
+        recursiveRoutes({ app, folderName: fullName, extras });
       } else if (file.toLowerCase().indexOf(".js")) {
-        if (file !== "index.ts" && file !== 'index.js') return
+        if (file !== "index.ts" && file !== "index.js") return;
         const Routes: { default: ({}: Routes) => void } = await import(
           "./" + fullName
         );
-        Routes.default({ app, folderName: stripFilePath(folderName), ws, extras });
+        Routes.default({ app, folderName: stripFilePath(folderName), extras });
         console.log("require('" + fullName + "')");
       }
     } catch (err) {
@@ -50,11 +50,11 @@ export function injectData(data: any) {
 
 export const options: Options = {
   info: {
-    version: '1.0.0',
-    title: 'Express API'
+    version: "1.0.0",
+    title: "Express API",
   },
   baseDir: __dirname,
-  filesPattern: './routes/**/index.ts',
+  filesPattern: "./routes/**/index.ts",
   exposeSwaggerUI: true,
-  apiDocsPath: '/api-docs'
-}
+  apiDocsPath: "/api-docs",
+};
